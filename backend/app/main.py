@@ -9,7 +9,7 @@ from fastapi.responses import JSONResponse
 
 from app.config import settings
 from app.database import engine, Base
-from app.routes import auth
+from app.routes import auth, oposicion
 
 # Crear tablas en la base de datos
 Base.metadata.create_all(bind=engine)
@@ -51,13 +51,16 @@ def root():
         "documentación": "/docs",
         "endpoints": {
             "autenticación": "/api/auth",
+            "oposiciones": "/api/oposiciones",
+            "preferencias": "/api/preferencias",
             "salud": "/health"
         }
     }
 
 
-# Incluir rutas de autenticación
+# Incluir routers
 app.include_router(auth.router)
+app.include_router(oposicion.router)
 
 
 # Manejador de excepciones global
